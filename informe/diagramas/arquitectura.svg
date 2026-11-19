@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 650" width="1080" height="650" font-family="DejaVu Sans, Liberation Sans, Arial, sans-serif">
+  <title>Arquitectura: servicios, dependencias y flujo del token</title>
+  <defs>
+    <marker id="aGris" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker>
+    <marker id="aNegro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111827"/></marker>
+    <marker id="aAzul" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f3c88"/></marker>
+    <marker id="aNaranja" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker>
+    <style>
+      .box { fill: #eef3fc; stroke: #1f3c88; stroke-width: 1.6; }
+      .auth { fill: #fff8e8; stroke: #b7791f; stroke-width: 1.6; }
+      .cli { fill: #f3f4f6; stroke: #374151; stroke-width: 1.4; }
+      .t { font-size: 15px; font-weight: bold; fill: #162c66; text-anchor: middle; }
+      .s { font-size: 11.5px; fill: #1f2937; text-anchor: middle; }
+      .db { font-size: 11px; font-style: italic; fill: #4b5563; text-anchor: middle; }
+      .lbl { font-size: 11px; fill: #1f2937; }
+      .lblA { font-size: 11px; fill: #1f3c88; }
+      .lblN { font-size: 11px; fill: #b45309; }
+      .lblG { font-size: 11px; fill: #4b5563; }
+      .jwt { fill: none; stroke: #111827; stroke-width: 2.6; }
+      .dep { fill: none; stroke: #1f3c88; stroke-width: 2; }
+      .e1 { fill: none; stroke: #b45309; stroke-width: 2; stroke-dasharray: 7 4; }
+      .val { fill: none; stroke: #6b7280; stroke-width: 1.4; stroke-dasharray: 4 4; }
+      .login { fill: none; stroke: #374151; stroke-width: 1.6; }
+    </style>
+  </defs>
+
+  <!-- Cliente -->
+  <rect class="cli" x="440" y="12" width="200" height="44" rx="22"/>
+  <text class="t" x="540" y="39" style="fill:#111827">Cliente / Swagger</text>
+
+  <!-- calificaciones -->
+  <rect class="box" x="410" y="120" width="260" height="76" rx="8"/>
+  <text class="t" x="540" y="143">calificaciones-service :8085</text>
+  <text class="s" x="540" y="163">notas por corte · promedio · /mias</text>
+  <text class="db" x="540" y="183">H2 calificacionesdb</text>
+
+  <!-- matriculas -->
+  <rect class="box" x="410" y="276" width="260" height="76" rx="8"/>
+  <text class="t" x="540" y="299">matriculas-service :8084</text>
+  <text class="s" x="540" y="319">registrar · anular · conteo · /mias</text>
+  <text class="db" x="540" y="339">H2 matriculasdb</text>
+
+  <!-- estudiantes -->
+  <rect class="box" x="40" y="276" width="210" height="76" rx="8"/>
+  <text class="t" x="145" y="299">estudiantes-service :8082</text>
+  <text class="s" x="145" y="319">CRUD · correo único</text>
+  <text class="db" x="145" y="339">H2 estudiantesdb</text>
+
+  <!-- cursos -->
+  <rect class="box" x="830" y="276" width="230" height="76" rx="8"/>
+  <text class="t" x="945" y="299">cursos-service :8083</text>
+  <text class="s" x="945" y="319">CRUD · código único · cupoMaximo</text>
+  <text class="db" x="945" y="339">H2 cursosdb</text>
+
+  <!-- auth -->
+  <rect class="auth" x="340" y="482" width="400" height="84" rx="8"/>
+  <text class="t" x="540" y="505" style="fill:#7c4a03">auth-service :8081</text>
+  <text class="s" x="540" y="525">POST /auth/login · BCrypt + emite JWT</text>
+  <text class="s" x="540" y="543">GET /auth/validate · verifica firma y expiración</text>
+  <text class="db" x="540" y="560">H2 authdb: usuarios</text>
+
+  <!-- 1-2: login y JWT (borde izquierdo) -->
+  <path class="login" d="M440,28 H16 V545 H338" marker-start="url(#aNegro)" marker-end="url(#aNegro)"/>
+  <text class="lbl" x="26" y="74">1. login (usuario + contraseña) →</text>
+  <text class="lbl" x="26" y="90">← 2. JWT {sub, role, estudianteId?}</text>
+
+  <!-- 3: Bearer JWT a los cuatro servicios de negocio -->
+  <path class="jwt" d="M540,56 V118" marker-end="url(#aNegro)"/>
+  <path class="jwt" d="M460,56 C340,90 170,150 150,274" marker-end="url(#aNegro)"/>
+  <path class="jwt" d="M620,56 C760,90 925,150 940,274" marker-end="url(#aNegro)"/>
+  <path class="jwt" d="M640,36 C740,50 740,240 668,274" marker-end="url(#aNegro)"/>
+  <text class="lbl" x="548" y="94" style="font-weight:bold">3. Bearer JWT</text>
+  <text class="lbl" x="60" y="200" style="font-weight:bold">3. Bearer JWT</text>
+  <text class="lbl" x="948" y="200" style="font-weight:bold">3. Bearer JWT</text>
+  <text class="lbl" x="732" y="190" style="font-weight:bold">3. Bearer JWT</text>
+
+  <!-- Dependencias de negocio (Feign, token propagado) -->
+  <path class="dep" d="M540,198 V274" marker-end="url(#aAzul)"/>
+  <text class="lblA" x="548" y="230">GET /api/matriculas/{id}</text>
+  <text class="lblA" x="548" y="245">GET /api/matriculas/mias</text>
+
+  <path class="dep" d="M410,296 H252" marker-end="url(#aAzul)"/>
+  <text class="lblA" x="262" y="289">GET /api/estudiantes/{id}</text>
+  <path class="e1" d="M252,334 H408" marker-end="url(#aNaranja)"/>
+  <text class="lblN" x="262" y="352">E1: conteo activas</text>
+
+  <path class="dep" d="M670,296 H828" marker-end="url(#aAzul)"/>
+  <text class="lblA" x="678" y="289">GET /api/cursos/{id}</text>
+  <path class="e1" d="M828,334 H672" marker-end="url(#aNaranja)"/>
+  <text class="lblN" x="678" y="352">E1/E2: conteo activas</text>
+
+  <!-- Validación del token en cada petición -->
+  <path class="val" d="M145,354 C145,450 280,505 338,515" marker-end="url(#aGris)"/>
+  <path class="val" d="M945,354 C945,450 800,505 742,515" marker-end="url(#aGris)"/>
+  <path class="val" d="M520,354 V480" marker-end="url(#aGris)"/>
+  <path class="val" d="M410,175 C360,185 345,230 345,260 V400 C345,440 400,465 450,480" marker-end="url(#aGris)"/>
+  <text class="lblG" x="528" y="425">validar token (GET /auth/validate)</text>
+  <text class="lblG" x="528" y="440">en cada petición</text>
+  <!-- Leyenda -->
+  <g transform="translate(60,598)">
+    <line x1="0" y1="8" x2="34" y2="8" class="jwt" marker-end="url(#aNegro)"/>
+    <text class="lbl" x="42" y="12">token del usuario</text>
+    <line x1="170" y1="8" x2="204" y2="8" class="dep" marker-end="url(#aAzul)"/>
+    <text class="lbl" x="212" y="12">consulta Feign (token propagado)</text>
+    <line x1="430" y1="8" x2="464" y2="8" class="e1" marker-end="url(#aNaranja)"/>
+    <text class="lbl" x="472" y="12">E1/E2: cierra los ciclos</text>
+    <line x1="640" y1="8" x2="674" y2="8" class="val" marker-end="url(#aGris)"/>
+    <text class="lbl" x="682" y="12">validación del token en auth-service</text>
+    <text class="db" x="480" y="40">Cada servicio tiene su propia base H2 en memoria; no hay llaves foráneas entre servicios.</text>
+  </g>
+</svg>

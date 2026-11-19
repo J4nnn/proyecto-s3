@@ -1,0 +1,4 @@
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.256 s -- in co.edu.matriculasservice.service.MatriculaServiceImplTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.236 s -- in co.edu.matriculasservice.controller.MatriculaControllerSecurityTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS

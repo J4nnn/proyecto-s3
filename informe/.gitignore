@@ -1,0 +1,4 @@
+.run/
+scripts/pdf/node_modules/
+scripts/pdf/package-lock.json
+scripts/pdf/informe.html
